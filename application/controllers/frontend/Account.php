@@ -252,6 +252,7 @@ class Account extends CI_Controller
             $this->session->set_userdata('customer_phone', $phone);
             $this->load->library('sms');
             // $this->sms->twilio($sms_code);
+            
             $response = json_encode(array('status' => 200, 'msg' => 'success'));
         } else {
             $response = json_encode(array('status' => 204, 'msg' => 'Please enter a valid mobile number.'));
