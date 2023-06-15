@@ -1,5 +1,5 @@
-node_modules
-storage/*.key
-vendor
+/node_modules
+/storage/*.key
+/vendor
 .idea
 .vscode
