@@ -1,0 +1,30 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2023-05-22 23:30:24 --> 404 Page Not Found: backend/Product/coupon_list.html
+ERROR - 2023-05-22 23:30:24 --> 404 Page Not Found: Faviconico/index
+ERROR - 2023-05-22 23:32:13 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:32:13 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:32:13 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:32:13 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:34:16 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:34:16 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:34:16 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:34:16 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:36:39 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:36:39 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:36:39 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:36:39 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:44:14 --> 404 Page Not Found: backend/Product/assets
+ERROR - 2023-05-22 23:44:14 --> 404 Page Not Found: backend/Product/assets
+ERROR - 2023-05-22 23:44:14 --> 404 Page Not Found: backend/Product/assets
+ERROR - 2023-05-22 23:44:14 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:44:14 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:44:14 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:44:15 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:47:15 --> 404 Page Not Found: backend/Product/assets
+ERROR - 2023-05-22 23:47:15 --> 404 Page Not Found: backend/Product/assets
+ERROR - 2023-05-22 23:47:15 --> 404 Page Not Found: backend/Product/assets
+ERROR - 2023-05-22 23:47:15 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:47:15 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:47:15 --> 404 Page Not Found: Public/layout
+ERROR - 2023-05-22 23:47:15 --> 404 Page Not Found: Public/layout
