@@ -221,7 +221,6 @@ class Account extends CI_Controller
                     //redirect password reset page
                     $this->session->set_userdata('password_validation', 1);
                     $url = 'account/new-password';
-                    
                 }
                 $result = json_encode(array('status' => 200, 'msg' => 'success', 'url' => $url));
             } else {
