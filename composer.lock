@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7703cc330fb3a0319894c251afd479fe",
+    "content-hash": "82207c4199b4249f9347613ec30bc405",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -232,6 +232,71 @@
                 "source": "https://github.com/mollie/mollie-api-php/tree/v2.56.0"
             },
             "time": "2023-05-30T13:11:03+00:00"
+        },
+        {
+            "name": "sms77/api",
+            "version": "v2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/seven-io/php-client.git",
+                "reference": "9d56308fbf959ca83ce3f2e1de7d7d45271d940e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/seven-io/php-client/zipball/9d56308fbf959ca83ce3f2e1de7d7d45271d940e",
+                "reference": "9d56308fbf959ca83ce3f2e1de7d7d45271d940e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "ext-simplexml": "*",
+                "ext-soap": "*",
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sms77\\Api\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "seven communications GmbH & Co. KG",
+                    "email": "support@seven.io",
+                    "homepage": "https://www.seven.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Official API Client for requesting the seven.io SMS Gateway.",
+            "homepage": "https://github.com/seven-io/php-client",
+            "keywords": [
+                "2fa",
+                "cnam",
+                "gateway",
+                "hlr",
+                "mnp",
+                "sms",
+                "text2speech",
+                "tts"
+            ],
+            "support": {
+                "docs": "https://github.com/seven-io/php-client",
+                "email": "support@seven.io",
+                "issues": "https://github.com/seven-io/php-client/issues",
+                "rss": "https://www.seven.io/en/feed/",
+                "source": "https://github.com/seven-io/php-client"
+            },
+            "time": "2023-05-26T12:27:14+00:00"
         },
         {
             "name": "twilio/sdk",

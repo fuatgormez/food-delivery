@@ -12,6 +12,7 @@ class Account extends CI_Controller
         $this->load->model(FRONTEND . '/Model_common');
         $this->load->model(FRONTEND . '/Model_customer');
 
+        $this->load->library('sms');
         $this->load->library("cookie");
         $this->load->library('gumlet');
 
@@ -194,51 +195,44 @@ class Account extends CI_Controller
         $this->checkSession ? redirect(base_url('home')) : null;
         if(!$this->session->userdata('otp_code')) {redirect(base_url('account/forgot-password'));}
 
-        $this->validation_otp($this->session->userdata('otp_code'));
+        $this->verification_otp($this->session->userdata('otp_code'));
     }
 
-    public function mobile_verification($phone)
+    public function verification($phone)
     {
-        if(json_decode($this->send_otp($phone))->status == 200){
-            $result = $this->validation_otp($this->session->userdata('otp_code'));
+        // if(json_decode($this->send_otp($phone))->status == 200){
+        //     $result = $this->validation_otp($this->session->userdata('otp_code'));
 
-            echo json_decode($result)->url;
-            exit;
-            json_decode($result)->status == 200 ? redirect(base_url('account/dashboard')) : null;
-        }
+        //     echo json_decode($result)->url;
+        //     exit;
+        //     json_decode($result)->status == 200 ? redirect(base_url('account/dashboard')) : null;
+        // }
+
+        // $this->Model_customer->update($this->session->userdata('customer_session')['id'], array('verified' => 1));
+
+        $data['setting'] = $this->Model_common->all_setting();
+        $data['all_store'] = $this->Model_common->all_store();
+        $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_header', $data);
+        $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_preloader');
+        $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_menu');
+        $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_validation_otp', $data);
+        $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_footer', $data);
     }
 
-    public function validation_otp(int $otp_code)
+    public function verification_otp(int $otp_code)
     {
         if($otp_code) {
             $result = '';
             if($otp_code == $this->session->userdata('otp_code')) {
-                if($this->checkSession) {
-                    $url = 'account/dashboard';
-                    $this->Model_customer->update($this->session->userdata('customer_session')['id'], array('verified' => 1));
-                    $this->session->set_flashdata('validate', 'Your mobile number is verified!');
-                } else {
-                    //redirect password reset page
-                    $this->session->set_userdata('password_validation', 1);
-                    $url = 'account/new-password';
-                }
-                $result = json_encode(array('status' => 200, 'msg' => 'success', 'url' => $url));
+                $this->session->set_userdata('password_validation', 1);
+                $result = json_encode(array('status' => 200, 'msg' => 'success'));
             } else {
                 $this->session->set_userdata('password_validation', 0);
                 $result = json_encode(array('status' => 204, 'msg' => 'Mobile number verification failed!'));
             }
-            return $result;
+            echo $result;
         } else {
-            // exit(json_encode(array('status' => 400, 'msg' => 'Bad Request')));
-
-            $data['setting'] = $this->Model_common->all_setting();
-            $data['all_store'] = $this->Model_common->all_store();
-
-            $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_header', $data);
-            $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_preloader');
-            $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_menu');
-            $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_validation_otp', $data);
-            $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_footer', $data);
+            echo json_encode(array('status' => 400, 'msg' => 'Bad Request'));
         }
     }
 
@@ -247,16 +241,20 @@ class Account extends CI_Controller
         $response = '';
         $check_phone = $this->Model_customer->check_phone($phone);
         if($check_phone) {
-            $sms_code = random_int(100000, 999999);
+            $sms_code = $this->create_random_code();
             $this->session->set_userdata('otp_code', $sms_code);
-            $this->session->set_userdata('customer_phone', $phone);
-            $this->load->library('sms');
-            // $this->sms->twilio($sms_code);
+            // $this->sms->twilio($phone, $sms_code);
+            $this->sms->seven77($phone, $sms_code);
             $response = json_encode(array('status' => 200, 'msg' => 'success'));
         } else {
             $response = json_encode(array('status' => 204, 'msg' => 'Please enter a valid mobile number.'));
         }
-        return $response;
+        echo $response;
+    }
+
+    public function verification_email($email = 0)
+    {
+        json_encode(array('status' => 400, 'msg' => 'Bad request!'));
     }
 
     public function new_password()
@@ -578,6 +576,11 @@ class Account extends CI_Controller
             'status'    => $data['status']
         );
         return $this->session->set_userdata('customer_session', $customer);
+    }
+
+    public function create_random_code()
+    {
+        return random_int(100000, 999999);
     }
 
     public function checkSession()

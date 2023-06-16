@@ -232,7 +232,7 @@
 
     $.ajax({
       type: "POST",
-      url: base_url + "account/validation-otp",
+      url: base_url + "account/verification-otp",
       data: { otp_code },
       dataType: "json",
 

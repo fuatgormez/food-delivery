@@ -20,7 +20,10 @@ class Sms
     {
         
         // Your Account SID and Auth Token from console.twilio.com
-        $sid = "AC21a06464acddb3bc9971eb1fd236f3ee";
+        //lafcanbazi@gmail.com
+        // $sid = "AC21a06464acddb3bc9971eb1fd236f3ee";
+        //erdemly1919@gmail.com
+        $sid = "ACab3fcf397a3bb03278b630718b2ccf3d";
         $token = "f8aaef36d05d119bbfc6b9cd34f48a40";
         $client = new \Twilio\Rest\Client($sid, $token);
 
@@ -35,5 +38,15 @@ class Sms
                 'body' => $msg
             ]
         );
+    }
+
+    public function seven77 ($phone, $sms_code)
+    {
+        $client = new \Sms77\Api\Client('08VB1mLG9FUqV3Mw1OnjGEhwbz4bkjjawMExxVWXl6AseW8pWpAq40OCO3w5YXXz');
+        $params = new \Sms77\Api\Params\SmsParams();
+        $client->sms($params
+            // ->setTo('+4901234567890')
+            ->setTo($phone)
+            ->setText($sms_code));
     }
 }

@@ -2,7 +2,8 @@
   "require": {
     "mollie/mollie-api-php": "^2.0",
     "gumlet/php-image-resize": "2.0.*",
-    "twilio/sdk": "^7.3"
+    "twilio/sdk": "^7.3",
+    "sms77/api": "^2.6"
   },
   "config": {
     "platform": {
