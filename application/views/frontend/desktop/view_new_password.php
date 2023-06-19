@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadscrumb-contain">
-                        <h2 class="mb-2">Log In</h2>
+                        <h2 class="mb-2">Create a new password</h2>
                         <nav>
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
@@ -12,7 +12,7 @@
                                         <i class="fa-solid fa-house"></i>
                                     </a>
                                 </li>
-                                <li class="breadcrumb-item active">Log In</li>
+                                <li class="breadcrumb-item active">New Password</li>
                             </ol>
                         </nav>
                     </div>

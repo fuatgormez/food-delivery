@@ -12,6 +12,7 @@ class Account extends CI_Controller
         $this->load->model(FRONTEND . '/Model_common');
         $this->load->model(FRONTEND . '/Model_customer');
 
+        $this->load->library('mail');
         $this->load->library('sms');
         $this->load->library("cookie");
         $this->load->library('gumlet');
@@ -198,42 +199,57 @@ class Account extends CI_Controller
         $this->verification_otp($this->session->userdata('otp_code'));
     }
 
-    public function verification($phone)
+    public function verification($param)
     {
-        // if(json_decode($this->send_otp($phone))->status == 200){
-        //     $result = $this->validation_otp($this->session->userdata('otp_code'));
+        !$this->session->userdata('otp_code') ? redirect(base_url('account/forgot-password')) : null;
 
-        //     echo json_decode($result)->url;
-        //     exit;
-        //     json_decode($result)->status == 200 ? redirect(base_url('account/dashboard')) : null;
-        // }
-
-        // $this->Model_customer->update($this->session->userdata('customer_session')['id'], array('verified' => 1));
+        if($param == 'forgot-password') {
+            $url = 'account/new-password';
+        } elseif($param === 'update-phone') {
+            $url = 'account/dashboard';
+        } else {
+            $url = 'home';
+        }
 
         $data['setting'] = $this->Model_common->all_setting();
         $data['all_store'] = $this->Model_common->all_store();
+        $data['url'] = $url;
         $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_header', $data);
         $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_preloader');
         $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_menu');
-        $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_validation_otp', $data);
+        $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_verification', $data);
         $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_footer', $data);
     }
 
-    public function verification_otp(int $otp_code)
+    public function verification_otp()
     {
-        if($otp_code) {
+        $valid = 1;
+        $msg = '';
+        $this->form_validation->set_rules('otp_code', 'Code', 'trim|numeric|required');
+        $this->form_validation->set_rules('url', 'Url', 'trim|required');
+        if ($this->form_validation->run() == FALSE) {
+            $valid = 0;
+            $msg .= validation_errors();
+        }
+
+        if($valid == 1) {
             $result = '';
-            if($otp_code == $this->session->userdata('otp_code')) {
+            if($this->input->post('otp_code') == $this->session->userdata('otp_code')) {
                 $this->session->set_userdata('password_validation', 1);
-                $result = json_encode(array('status' => 200, 'msg' => 'success'));
+                $result = json_encode(array('status' => 200, 'msg' => 'success', 'url' => $this->input->post('url')));
             } else {
                 $this->session->set_userdata('password_validation', 0);
                 $result = json_encode(array('status' => 204, 'msg' => 'Mobile number verification failed!'));
             }
             echo $result;
         } else {
-            echo json_encode(array('status' => 400, 'msg' => 'Bad Request'));
+            echo json_encode(array('status' => 400, 'msg' => $msg));
         }
+    }
+
+    public function verification_email()
+    {
+        json_encode(array('status' => 400, 'msg' => 'Bad request!'));
     }
 
     public function send_otp($phone)
@@ -243,8 +259,9 @@ class Account extends CI_Controller
         if($check_phone) {
             $sms_code = $this->create_random_code();
             $this->session->set_userdata('otp_code', $sms_code);
+            $this->mail->send('lafcanbazi@gmail.com', $sms_code);
             // $this->sms->twilio($phone, $sms_code);
-            $this->sms->seven77($phone, $sms_code);
+            // $this->sms->seven77($phone, $sms_code);
             $response = json_encode(array('status' => 200, 'msg' => 'success'));
         } else {
             $response = json_encode(array('status' => 204, 'msg' => 'Please enter a valid mobile number.'));
@@ -252,13 +269,11 @@ class Account extends CI_Controller
         echo $response;
     }
 
-    public function verification_email($email = 0)
-    {
-        json_encode(array('status' => 400, 'msg' => 'Bad request!'));
-    }
-
     public function new_password()
     {
+
+        !$this->session->userdata('otp_code') ? redirect(base_url('account/forgot-password')) : null;
+        
         if($this->session->userdata('password_validation') == 1) {
             if($_POST) {
                 $password = $this->input->post('password');

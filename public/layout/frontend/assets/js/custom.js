@@ -188,11 +188,9 @@
     e.preventDefault();
     let phone = $(".forgot-password").val();
 
-    console.log(phone.length);
-
     if (phone.length < 12 || phone.length > 15) {
       $(".warning").removeClass("d-none");
-      $(".alert").html("invalid phone number");
+      $(".alert").html("Invalid Phone Number");
 
       return;
     } else {
@@ -209,7 +207,8 @@
 
       success(res) {
         if (res.status == 200) {
-          window.location.href = base_url + "account/reset-password";
+          window.location.href =
+            base_url + "account/verification/forgot-password";
         } else {
           $(".warning").removeClass("d-none");
           $(".alert").html(res.msg);
@@ -230,10 +229,12 @@
 
     let otp_code = first + second + third + fourth + fifth + sixth;
 
+    let url = $(this).data("url");
+
     $.ajax({
       type: "POST",
       url: base_url + "account/verification-otp",
-      data: { otp_code },
+      data: { otp_code, url },
       dataType: "json",
 
       success(res) {

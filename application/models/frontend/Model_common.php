@@ -14,6 +14,12 @@ class Model_common extends CI_Model
         $query = $this->db->query("SELECT * FROM tbl_setting WHERE id=1");
         return $query->first_row('array');
     }
+    
+    public function email_configuration()
+    {
+        $query = $this->db->query("SELECT * FROM tbl_email_configuration WHERE id=1");
+        return $query->first_row('array');
+    }
 
     public function all_store()
     {

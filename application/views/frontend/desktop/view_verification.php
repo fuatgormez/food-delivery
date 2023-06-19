@@ -53,7 +53,7 @@
                             <div class="send-box pt-4">
                                 <h5>Didn't get the code? <a href="javascript:void(0)" class="theme-color fw-bold">Resend It</a></h5>
                             </div>
-                            <a class="btn btn-animation w-100 mt-3 validate">Validate</a>
+                            <a class="btn btn-animation w-100 mt-3 validate" data-url="<?php echo $url;?>">Validate</a>
                         </div>
                     </div>
                 </div>
