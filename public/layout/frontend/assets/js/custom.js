@@ -196,7 +196,7 @@
     } else {
       $(".warning").addClass("d-none");
       $(".alert").html("");
-      $(this).prop("disabled", true);
+      $(this).prop("disabled", false);
     }
 
     $.ajax({

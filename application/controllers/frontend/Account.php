@@ -162,6 +162,7 @@ class Account extends CI_Controller
             }
 
             if($valid == 1) {
+                $this->session->set_userdata('customer_phone', $this->input->post('phone'));
                 $this->send_otp($phone);
             } else {
                 echo json_encode(array('status' => 204, 'msg' => $msg));
@@ -273,7 +274,7 @@ class Account extends CI_Controller
     {
 
         !$this->session->userdata('otp_code') ? redirect(base_url('account/forgot-password')) : null;
-        
+
         if($this->session->userdata('password_validation') == 1) {
             if($_POST) {
                 $password = $this->input->post('password');
