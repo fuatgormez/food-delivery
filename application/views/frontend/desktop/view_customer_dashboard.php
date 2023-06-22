@@ -54,16 +54,16 @@
 
                                 <div class="profile-name">
                                     <h3><?php echo $customer['firstname'] .' '. $customer['lastname'] ;?></h3>
-                                    <h6 class="text-content"><?php echo $customer['email'];?></h6>
                                     <h6 class="text-content">
                                     <?php if($customer['verified'] == 1):?>
                                         <img src="<?php echo base_url('public/assets/images/svg/verified-symbol-icon.svg');?>" width="24" title="Verified!">
+                                        <?php echo $customer['phone'];?>
                                     <?php else:?>
-                                        <a href="<?php echo base_url('account/mobile-verification/'.$customer['phone']);?>">
+                                        <a href="#" class="verification" data-phone="<?php echo $customer['phone'];?>" title="verify phone">
                                             <img src="<?php echo base_url('public/assets/images/svg/close-red-icon.svg');?>" width="24" title="Not verified!">
+                                            <?php echo $customer['phone'];?>
                                         </a>
                                     <?php endif;?>
-                                        <?php echo $customer['phone'];?>
                                     </h6>
                                 </div>
                             </div>
@@ -186,7 +186,7 @@
                                             </div>
                                             <div class="dashboard-detail">
                                                 <h6 class="text-content">MARK JECNO</h6>
-                                                <h6 class="text-content">vicki.pope@gmail.com</h6>
+                                                <h6 class="text-content"><?php echo $customer['email'];?></h6>
                                                 <a href="javascript:void(0)">Change Password</a>
                                             </div>
                                         </div>

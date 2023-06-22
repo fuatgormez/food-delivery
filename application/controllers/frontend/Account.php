@@ -44,7 +44,7 @@ class Account extends CI_Controller
             if (!$un) {
                 $msg = 'Email is wrong!';
                 $this->session->set_flashdata('error', $msg);
-                exit(json_encode(array('status' => 204, 'msg' => $msg)));
+                exit(json_encode(array('status' => 400, 'msg' => $msg)));
                 // redirect(base_url('backend/account/signin'));
             } else {
                 // When username / email found, checking the password
@@ -57,11 +57,11 @@ class Account extends CI_Controller
                 if (!$pw) {
                     $msg = 'Password is wrong!';
                     $this->session->set_flashdata('error', $msg);
-                    exit(json_encode(array('status' => 204, 'msg' => $msg)));
+                    exit(json_encode(array('status' => 400, 'msg' => $msg)));
                 } else if($pw['status'] === "Passive") {
                     $msg = 'Your account has been deactivated!';
                     $this->session->set_flashdata('error', $msg);
-                    exit(json_encode(array('status' => 204, 'msg' => $msg)));
+                    exit(json_encode(array('status' => 400, 'msg' => $msg)));
                 } else {
                     // When username and password both are correct
                     $this->create_session($pw);
@@ -148,6 +148,19 @@ class Account extends CI_Controller
     public function forgot_password()
     {
         $this->checkSession ? redirect(base_url('home')) : null;
+        
+        $data['setting'] = $this->Model_common->all_setting();
+        $data['all_store'] = $this->Model_common->all_store();
+        
+        $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_header', $data);
+        $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_preloader');
+        $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_menu');
+        $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_forgot_password', $data);
+        $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_footer', $data);
+    }
+
+    public function verify()
+    {
         if($this->input->post('phone')) {
             $phone = $this->input->post('phone');
 
@@ -165,39 +178,11 @@ class Account extends CI_Controller
                 $this->session->set_userdata('customer_phone', $this->input->post('phone'));
                 $this->send_otp($phone);
             } else {
-                echo json_encode(array('status' => 204, 'msg' => $msg));
+                echo json_encode(array('status' => 400, 'msg' => $msg));
             }
 
-        } else {
-            $data['setting'] = $this->Model_common->all_setting();
-            $data['all_store'] = $this->Model_common->all_store();
-            
-            $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_header', $data);
-            $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_preloader');
-            $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_menu');
-            $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_forgot_password', $data);
-            $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_footer', $data);
+            $this->Model_customer->verify_phone($this->input->post('phone'), array('verified' => 1));
         }
-    }
-
-    public function reset_password()
-    {
-        // $this->checkSession ? redirect(base_url('home')) : null;
-        // if(!$this->session->userdata('otp_code')) {redirect(base_url('account/forgot-password'));}
-
-        // $data['setting'] = $this->Model_common->all_setting();
-        // $data['all_store'] = $this->Model_common->all_store();
-
-        // $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_header', $data);
-        // $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_preloader');
-        // $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_menu');
-        // $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_reset_password', $data);
-        // $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_footer', $data);
-
-        $this->checkSession ? redirect(base_url('home')) : null;
-        if(!$this->session->userdata('otp_code')) {redirect(base_url('account/forgot-password'));}
-
-        $this->verification_otp($this->session->userdata('otp_code'));
     }
 
     public function verification($param)
@@ -206,7 +191,7 @@ class Account extends CI_Controller
 
         if($param == 'forgot-password') {
             $url = 'account/new-password';
-        } elseif($param === 'update-phone') {
+        } elseif($param === 'verify-phone') {
             $url = 'account/dashboard';
         } else {
             $url = 'home';
@@ -215,6 +200,7 @@ class Account extends CI_Controller
         $data['setting'] = $this->Model_common->all_setting();
         $data['all_store'] = $this->Model_common->all_store();
         $data['url'] = $url;
+
         $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_header', $data);
         $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_preloader');
         $this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_menu');
@@ -240,7 +226,7 @@ class Account extends CI_Controller
                 $result = json_encode(array('status' => 200, 'msg' => 'success', 'url' => $this->input->post('url')));
             } else {
                 $this->session->set_userdata('password_validation', 0);
-                $result = json_encode(array('status' => 204, 'msg' => 'Mobile number verification failed!'));
+                $result = json_encode(array('status' => 400, 'msg' => 'Mobile number verification failed!'));
             }
             echo $result;
         } else {
@@ -260,12 +246,12 @@ class Account extends CI_Controller
         if($check_phone) {
             $sms_code = $this->create_random_code();
             $this->session->set_userdata('otp_code', $sms_code);
-            $this->mail->send('lafcanbazi@gmail.com', $sms_code);
+            $this->mail->send($check_phone['email'], $sms_code);
             // $this->sms->twilio($phone, $sms_code);
             // $this->sms->seven77($phone, $sms_code);
             $response = json_encode(array('status' => 200, 'msg' => 'success'));
         } else {
-            $response = json_encode(array('status' => 204, 'msg' => 'Please enter a valid mobile number.'));
+            $response = json_encode(array('status' => 400, 'msg' => 'Please enter a valid mobile number.'));
         }
         echo $response;
     }
@@ -303,7 +289,7 @@ class Account extends CI_Controller
                     echo json_encode(array('status' => 200, 'msg' => 'Your password has been updated successfully!'));
 
                 } else {
-                    echo json_encode(array('status' => 204, 'msg' => $msg));
+                    echo json_encode(array('status' => 400, 'msg' => $msg));
                 }
             } else {   
                 $data['setting'] = $this->Model_common->all_setting();
@@ -592,6 +578,34 @@ class Account extends CI_Controller
             'status'    => $data['status']
         );
         return $this->session->set_userdata('customer_session', $customer);
+    }
+
+    public function upload()
+    {
+        $path = $_FILES['photo']['name'];
+        $path_tmp = $_FILES['photo']['tmp_name'];
+
+        $form_data = [];
+
+        if(!empty($path)) {
+            $ext = pathinfo( $path, PATHINFO_EXTENSION );
+            $file_name = basename( $path, '.' . $ext );
+            $ext_check = $this->Model_common->extension_check_photo($ext);
+            if($ext_check == FALSE) {
+                $valid = 0;
+                $error .= 'You must have to upload jpg, jpeg, gif or png file for featured photo<br>';
+            }
+            $final_name = '1000.'.strtolower($ext);
+            // $final_name = $data['profile']['username'].'-'.$id.'.'.strtolower($ext);
+
+            unlink('./public/uploads/customer/' . $final_name);
+            unlink('./public/uploads/customer/thumbnail/' . $final_name);
+            $form_data['photo'] = $final_name;
+            $this->gumlet->crop($path_tmp, './public/uploads/customer/' . $final_name, 500, 500);
+            $this->gumlet->crop($path_tmp, './public/uploads/customer/thumbnail/' . $final_name, 150, 150);
+        }
+
+        return $form_data;
     }
 
     public function create_random_code()

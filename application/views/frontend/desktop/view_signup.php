@@ -46,31 +46,31 @@
                                 </div>
                                 <div class="col-xxl-6">
                                     <div class="form-floating theme-form-floating">
-                                        <input type="text" class="form-control" id="firstname" placeholder="First Name">
+                                        <input type="text" class="form-control" id="firstname" placeholder="First Name" required>
                                         <label for="firstname">Firstname</label>
                                     </div>
                                 </div>
                                 <div class="col-xxl-6">
                                     <div class="form-floating theme-form-floating">
-                                        <input type="text" class="form-control" id="lastname" placeholder="Last Name">
+                                        <input type="text" class="form-control" id="lastname" placeholder="Last Name" required>
                                         <label for="lastname">Lastname</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
-                                        <input type="email" class="form-control" id="email" placeholder="Email Address">
+                                        <input type="email" class="form-control" id="email" placeholder="Email Address" required>
                                         <label for="email">Email Address</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
-                                        <input type="tel" class="form-control" id="phone" placeholder="Phone">
+                                        <input type="tel" class="form-control" id="phone" placeholder="Phone" required>
                                         <label for="phone">Phone</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
-                                        <input type="password" class="form-control" id="password" placeholder="Password">
+                                        <input type="password" class="form-control" id="password" placeholder="Password" required>
                                         <label for="password">Password</label>
                                     </div>
                                 </div>

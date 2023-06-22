@@ -42,11 +42,6 @@
 
                             <div class="input-box">
                                 <div class="row g-4">
-                                    <div class="col-12 d-none warning">
-                                        <div class="alert alert-danger" role="alert">
-                                        Invalid phone number please enter like this! +4917682136135
-                                        </div>
-                                    </div>
                                     <div class="col-12">
                                         <div class="form-floating theme-form-floating log-in-form">
                                             <input type="number" class="form-control forgot-password" id="phone" name="phone" placeholder="Phone" required>

@@ -79,6 +79,11 @@ class Model_customer extends CI_Model
         $this->db->where('phone', $phone);
         $this->db->update('tbl_shop_customer', $data);
     }
+    
+    function verify_phone($phone, $data) {
+        $this->db->where('phone', $phone);
+        $this->db->update('tbl_shop_customer', $data);
+    }
 
     public function get_address($id)
     {

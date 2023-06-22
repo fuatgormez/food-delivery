@@ -5,11 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Fastkart">
+    <meta name="description" content="Sushikoo">
     <meta name="keywords" content="Fastkart">
-    <meta name="author" content="Fastkart">
-    <link rel="icon" href="<?php echo base_url();?>public/layout/frontend/desktop/assets/images/favicon/4.png" type="image/x-icon">
-    <title>On-demand last-mile delivery</title>
+    <meta name="author" content="FG">
+    <link rel="icon" href="<?php echo base_url('public/uploads/'.$setting['favicon']);?>" type="image/x-icon">
+    <title><?php echo $setting['site_name'];?></title>
 
     <!-- Google font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">

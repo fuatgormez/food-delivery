@@ -39,9 +39,6 @@
 
                         <div class="input-box">
                             <div class="row g-4">
-                                <div class="col-12 d-none warning">
-                                    <div class="alert alert-danger" role="alert"></div>
-                                </div>
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating log-in-form">
                                         <input type="password" class="form-control" id="password" placeholder="New Password">

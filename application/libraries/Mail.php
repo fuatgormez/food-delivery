@@ -32,11 +32,13 @@ class Mail
         redirect(base_url());
     }
 
-    public function send($email, $message)
+    public function send($email, $reset_code)
     {
         // $data['mail'] = $this->_CI->Model_common->get_send_email($lang_code, $message_type);
         $data['setting'] = $this->_CI->Model_common->all_setting();
         $data['mail'] = $this->_CI->Model_common->email_configuration();
+        $data['customer'] = $this->_CI->Model_common->get_customer_by_email($email);
+        $data['reset_code'] = $reset_code;
         // $data['social'] = $this->_CI->Model_common->all_social();
         // $data['order'] = $this->_CI->Model_common->get_order($order_number);
         // $data['order_number'] = $order_number;
@@ -46,12 +48,12 @@ class Mail
         // $this->_CI->pdf->order_confirmation($order_number);
         // $this->_CI->pdf->shooting_coupon($order_number);
 
-        // $message = $this->_CI->load->view('email/view_index', $data, TRUE);
+        $view = $this->_CI->load->view('email/view_reset_password', $data, TRUE);
 
         $this->_CI->email->from($data['mail']['email'], $data['setting']['site_name']);
         $this->_CI->email->to($email);
-        $this->_CI->email->subject('subject');
-        $this->_CI->email->message($message);
+        $this->_CI->email->subject('Verification Code');
+        $this->_CI->email->message($view);
         $this->_CI->email->set_mailtype("html");
         $this->_CI->email->send();
         $debug = $this->_CI->email->print_debugger();

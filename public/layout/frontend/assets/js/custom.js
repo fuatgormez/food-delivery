@@ -22,9 +22,17 @@
           window.location.href = base_url;
         }
 
-        if (res.status == 204) {
-          $(".warning").removeClass("d-none");
-          $(".alert").html(res.msg);
+        if (res.status == 400) {
+          $.notify(
+            {
+              icon: "",
+              title: "Error!",
+              message: res.msg,
+            },
+            {
+              type: "warning",
+            }
+          );
         }
       },
     });
@@ -53,12 +61,20 @@
 
       success(res) {
         if (res.status == 200) {
-          window.location.href = base_url + "account/validation-otp";
+          window.location.href = base_url + "account/dashboard";
         }
 
         if (res.status == 400) {
-          $(".warning").removeClass("d-none");
-          $(".alert").html(res.msg);
+          $.notify(
+            {
+              icon: "",
+              title: "Error!",
+              message: res.msg,
+            },
+            {
+              type: "warning",
+            }
+          );
         }
       },
     });
@@ -112,8 +128,16 @@
         }
 
         if (res.status == 400) {
-          $(".warning").removeClass("d-none");
-          $(".alert").html(res.msg);
+          $.notify(
+            {
+              icon: "",
+              title: "Error!",
+              message: res.msg,
+            },
+            {
+              type: "warning",
+            }
+          );
         }
       },
     });
@@ -189,19 +213,27 @@
     let phone = $(".forgot-password").val();
 
     if (phone.length < 12 || phone.length > 15) {
-      $(".warning").removeClass("d-none");
-      $(".alert").html("Invalid Phone Number");
+      $.notify(
+        {
+          icon: "",
+          title: "Error!",
+          message: "Invalid Phone Number",
+        },
+        {
+          type: "warning",
+        }
+      );
 
       return;
     } else {
       $(".warning").addClass("d-none");
       $(".alert").html("");
-      $(this).prop("disabled", false);
+      $(this).prop("disabled", true);
     }
 
     $.ajax({
       type: "POST",
-      url: base_url + "account/forgot-password",
+      url: base_url + "account/verify",
       data: { phone },
       dataType: "json",
 
@@ -210,9 +242,49 @@
           window.location.href =
             base_url + "account/verification/forgot-password";
         } else {
-          $(".warning").removeClass("d-none");
-          $(".alert").html(res.msg);
-          $(this).prop("disabled", false);
+          $.notify(
+            {
+              icon: "",
+              title: "Error!",
+              message: res.msg,
+            },
+            {
+              type: "warning",
+            }
+          );
+        }
+      },
+    });
+  });
+
+  $(".verification").on("click", function (e) {
+    e.preventDefault();
+    let phone = $(this).data("phone");
+
+    if (phone.length < 12 || phone.length > 15) {
+      $.notify(
+        {
+          icon: "",
+          title: "Error!",
+          message: "Invalid Phone Number",
+        },
+        {
+          type: "warning",
+        }
+      );
+
+      return;
+    }
+
+    $.ajax({
+      type: "POST",
+      url: base_url + "account/verify",
+      data: { phone },
+      dataType: "json",
+
+      success(res) {
+        if (res.status == 200) {
+          window.location.href = base_url + "account/verification/verify-phone";
         }
       },
     });
@@ -240,6 +312,17 @@
       success(res) {
         if (res.status == 200) {
           window.location.href = base_url + res.url;
+        } else {
+          $.notify(
+            {
+              icon: "",
+              title: "Error!",
+              message: res.msg,
+            },
+            {
+              type: "warning",
+            }
+          );
         }
       },
     });
@@ -261,9 +344,17 @@
           window.location.href = base_url;
         }
 
-        if (res.status == 204) {
-          $(".warning").removeClass("d-none");
-          $(".alert").html(res.msg);
+        if (res.status == 400) {
+          $.notify(
+            {
+              icon: "",
+              title: "Error!",
+              message: res.msg,
+            },
+            {
+              type: "warning",
+            }
+          );
         }
       },
     });

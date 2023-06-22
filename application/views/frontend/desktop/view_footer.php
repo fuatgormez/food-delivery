@@ -602,7 +602,7 @@
     <script src="<?php echo base_url();?>public/layout/frontend/desktop/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="<?php echo base_url();?>public/layout/frontend/desktop/assets/js/bootstrap/popper.min.js"></script>
 
-    <?php if (in_array(uri_string(), ['account/verification/forgot-password', 'account/verification/update-phone'])) : ?>
+    <?php if (in_array(uri_string(), ['account/verification/forgot-password', 'account/verification/verify-phone'])) : ?>
     <!-- otp js-->
     <script src="<?php echo base_url();?>public/layout/frontend/desktop/assets/js/otp.js"></script>
     <?php endif;?>

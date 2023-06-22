@@ -8,6 +8,15 @@ class Model_common extends CI_Model
         $query = $this->db->query("SELECT * FROM tbl_user");
         return $query->result_array();
     }
+    
+    public function get_customer_by_email($email)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_shop_customer');
+        $this->db->where('email', $email);
+        $query = $this->db->get();
+        return $query->first_row('array');
+    }
 
     public function all_setting()
     {

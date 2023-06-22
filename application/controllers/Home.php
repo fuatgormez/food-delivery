@@ -7,14 +7,23 @@ class Home extends CI_Controller {
         if(!$this->session->userdata('store')) {redirect(base_url('all-store'));}
 
         $this->load->model(FRONTEND . '/Model_common');
+        $this->load->model(FRONTEND . '/shop/Model_product');
 	}
 
 	public function index()
 	{
         $data['setting'] = $this->Model_common->all_setting();
         $data['all_store'] = $this->Model_common->all_store();
+        $data['all_product'] = $this->Model_product->all_product();
+        $data['all_product_category'] = $this->Model_product->all_product_category();
+
+
 
 		// echo '<pre>';
+		// var_dump($data['all_product']);
+
+		// exit;
+
 		// print_r($_SESSION);
 		// print_r($this->session->userdata('customer_session'));
 		// exit;
@@ -22,7 +31,7 @@ class Home extends CI_Controller {
 		$this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_header', $data);
 		$this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_preloader');
 		$this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_menu');
-		$this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_home');
+		$this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_home',$data);
 		$this->load->view(FRONTEND.'/'.DESIGN_MODE.'/view_footer');
 	}
 
